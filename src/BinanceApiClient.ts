@@ -171,7 +171,7 @@ export class BinanceApiClient {
             "ticker/24hr",
             AuthenticationMethod.NONE,
             [ "symbol", symbol ]
-        ) );
+        ), symbol );
 
     }
 
