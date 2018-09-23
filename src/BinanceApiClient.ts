@@ -42,19 +42,13 @@ export class BinanceApiClient {
     private static readonly WS_BASE_URL: string = "wss://stream.binance.com:9443/ws/";
     private static readonly DEFAULT_WS_TIMEOUT: number = 60000;
 
-    private static API_KEY: string;
-    private static API_SECRET: string;
-
     /**
      * Initializes a new Binance API client.
      *
      * @param apiKey    The personal account API key.
      * @param apiSecret The personal account API secret.
      */
-    constructor( apiKey?: string, apiSecret?: string ) {
-        BinanceApiClient.API_KEY = apiKey;
-        BinanceApiClient.API_SECRET = apiSecret;
-    }
+    constructor(private apiKey?: string, private apiSecret?: string ) { }
 
     /**
      * Interface to the "GET v1/ping" Binance's API operation.
@@ -832,20 +826,20 @@ export class BinanceApiClient {
             return;
         }
 
-        if( isNullOrUndefined( BinanceApiClient.API_KEY ) ) {
+        if( isNullOrUndefined( this.apiKey ) ) {
             throw new AuthenticationError( httpMethod, apiUrl, authenticationMethod );
         }
-        headers[ "X-MBX-APIKEY" ] = BinanceApiClient.API_KEY;
+        headers[ "X-MBX-APIKEY" ] = this.apiKey;
 
         if( authenticationMethod === AuthenticationMethod.SIGNED ) {
 
-            if( isNullOrUndefined( BinanceApiClient.API_SECRET ) ) {
+            if( isNullOrUndefined( this.apiSecret ) ) {
                 throw new AuthenticationError( httpMethod, apiUrl, authenticationMethod );
             }
             apiUrl.searchParams.append( "timestamp", new Date().getTime().toString() );
             apiUrl.searchParams.append(
                 "signature",
-                CryptoJs.HmacSHA256( apiUrl.searchParams.toString(), BinanceApiClient.API_SECRET ).toString()
+                CryptoJs.HmacSHA256( apiUrl.searchParams.toString(), this.apiSecret ).toString()
             );
 
         }
