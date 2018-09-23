@@ -176,6 +176,25 @@ export class BinanceApiClient {
     }
 
     /**
+     * Interface to the "GET v1/ticker/24hr" Binance's API operation. (no 'symbol' param)
+     * Get last 24 hours price change statistics for all symbols.
+     * Note: this has a relatively high request weight. (40 @ Sept 23, 2018)
+     *
+     * @returns The last 24-hour ticker statistics of all symbols.
+     */
+    public async getAllLastDayTickerStatistics(): Promise< TickerStatistics[] > {
+
+        const tickersJson: any[] = await this.makeRequest(
+            HttpMethod.GET,
+            ApiVersion.V1,
+            "ticker/24hr",
+            AuthenticationMethod.NONE
+        );
+
+        return tickersJson.map(tickerJson => new TickerStatistics(tickerJson));
+    }
+
+    /**
      * Interface to the "GET v1/ticker/allPrices" Binance's API operation.
      * Get the latest price for all symbols.
      *
