@@ -30,7 +30,7 @@ export class ExchangeInfo {
         for( let jsonFilter of json.exchangeFilters ) {
 
             let filter: ExchangeFilter;
-            switch( FilterType[ jsonFilter.filterType as string ] ) {
+            switch( FilterType[ jsonFilter.filterType as keyof typeof FilterType ] ) {
 
                 case FilterType.EXCHANGE_MAX_NUM_ORDERS: {
                     filter = new MaxOrdersFilter( jsonFilter );
@@ -40,9 +40,7 @@ export class ExchangeInfo {
                     filter = new MaxAlgoOrdersFilter( jsonFilter );
                     break;
                 }
-                default: {
-                    filter = null;
-                }
+                default: continue;
 
             }
             this._filters.push( filter );

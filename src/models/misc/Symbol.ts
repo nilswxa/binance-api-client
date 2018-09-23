@@ -64,6 +64,7 @@ export class Symbol {
                     filter = new MaxAlgoOrdersFilter( jsonFilter );
                     break;
                 }
+                default: continue;
 
             }
             this._filters.push( filter );
