@@ -281,14 +281,14 @@ export class BinanceApiClient {
                 "timeInForce",
                 type === OrderType.MARKET || type === OrderType.STOP_LOSS ? null : TimeInForce[ timeInForce ]
             ],
-            [ "quantity", quantity ],
+            [ "quantity", quantity.toFixed(10) ],
             [
                 "price",
-                type === OrderType.MARKET || type === OrderType.STOP_LOSS ? null : price
+                type === OrderType.MARKET || type === OrderType.STOP_LOSS ? null : price.toFixed(10)
             ],
             [ "newClientOrderId", clientOrderId ],
-            [ "stopPrice", stopPrice ],
-            [ "icebergQty", icebergQuantity ],
+            [ "stopPrice", stopPrice ? stopPrice.toFixed(10) : null ],
+            [ "icebergQty", icebergQuantity ? icebergQuantity.toFixed(10) : null ],
             [ "newOrderRespType", responseType ? ResponseType [ responseType ] : null ]
         );
 
