@@ -5,7 +5,6 @@ import { HttpMethod } from "./enums/HttpMethod";
 import { AuthenticationError } from "./errors/AuthenticationError";
 import * as request from "request-promise";
 import * as Path from "path";
-import { isNullOrUndefined } from "util";
 import { URL } from "url";
 import { OrderBook } from "./models/depth/OrderBook";
 import { ApiError } from "./errors/ApiError";
@@ -290,7 +289,7 @@ export class BinanceApiClient {
             [ "newClientOrderId", clientOrderId ],
             [ "stopPrice", stopPrice ],
             [ "icebergQty", icebergQuantity ],
-            [ "newOrderRespType", isNullOrUndefined( responseType ) ? null : ResponseType[ responseType ] ]
+            [ "newOrderRespType", responseType ? ResponseType [ responseType ] : null ]
         );
 
         switch( responseType ) {
@@ -626,7 +625,7 @@ export class BinanceApiClient {
 
         new HeartbeatHandler(
             websocket,
-            isNullOrUndefined( connectionTimeout ) ? BinanceApiClient.DEFAULT_WS_TIMEOUT : connectionTimeout,
+            connectionTimeout || BinanceApiClient.DEFAULT_WS_TIMEOUT,
             onLostConnection
         ).handle();
 
@@ -665,7 +664,7 @@ export class BinanceApiClient {
 
         new HeartbeatHandler(
             websocket,
-            isNullOrUndefined( connectionTimeout ) ? BinanceApiClient.DEFAULT_WS_TIMEOUT : connectionTimeout,
+            connectionTimeout || BinanceApiClient.DEFAULT_WS_TIMEOUT,
             onLostConnection
         ).handle();
 
@@ -701,7 +700,7 @@ export class BinanceApiClient {
 
         new HeartbeatHandler(
             websocket,
-            isNullOrUndefined( connectionTimeout ) ? BinanceApiClient.DEFAULT_WS_TIMEOUT : connectionTimeout,
+            connectionTimeout || BinanceApiClient.DEFAULT_WS_TIMEOUT,
             onLostConnection
         ).handle();
 
@@ -738,7 +737,7 @@ export class BinanceApiClient {
 
         new HeartbeatHandler(
             websocket,
-            isNullOrUndefined( connectionTimeout ) ? BinanceApiClient.DEFAULT_WS_TIMEOUT : connectionTimeout,
+            connectionTimeout || BinanceApiClient.DEFAULT_WS_TIMEOUT,
             onLostConnection
         ).handle();
 
@@ -792,7 +791,7 @@ export class BinanceApiClient {
 
         for( let parameter of parameters ) {
 
-            if( isNullOrUndefined( parameter[ 1 ] ) ) {
+            if( !parameter[ 1 ] ) {
                 continue;
             }
             apiUrl.searchParams.append( parameter[ 0 ], parameter[ 1 ].toString() );
@@ -845,14 +844,14 @@ export class BinanceApiClient {
             return;
         }
 
-        if( isNullOrUndefined( this.apiKey ) ) {
+        if( !this.apiKey ) {
             throw new AuthenticationError( httpMethod, apiUrl, authenticationMethod );
         }
         headers[ "X-MBX-APIKEY" ] = this.apiKey;
 
         if( authenticationMethod === AuthenticationMethod.SIGNED ) {
 
-            if( isNullOrUndefined( this.apiSecret ) ) {
+            if( ! this.apiSecret ) {
                 throw new AuthenticationError( httpMethod, apiUrl, authenticationMethod );
             }
             apiUrl.searchParams.append( "timestamp", new Date().getTime().toString() );
