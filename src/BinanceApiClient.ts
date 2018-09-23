@@ -777,7 +777,7 @@ export class BinanceApiClient {
      * @returns Either the promise of the Binance's API JSON response, or the
      *          JSON response if using the await construct.
      */
-    private async makeRequest(
+    protected async makeRequest(
         httpMethod: HttpMethod,
         apiVersion: ApiVersion,
         accessedResource: string,
