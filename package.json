@@ -8,7 +8,8 @@
     },
     "scripts": {
         "build": "tsc && cp index.d.ts build",
-        "prepublishOnly": "npm run build"
+        "prepublishOnly": "npm run build",
+        "postinstall": "npm run build"
     },
     "repository": {
         "type": "git",
