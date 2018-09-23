@@ -18,16 +18,16 @@ export class Candlestick {
     constructor( json: any ) {
 
         this._openingTime = new Date( json[ 0 ] );
-        this._openingPrice = json[ 1 ];
-        this._highestPrice = json[ 2 ];
-        this._lowestPrice = json[ 3 ];
-        this._closurePrice = json[ 4 ];
-        this._baseAssetVolume = json[ 5 ];
+        this._openingPrice = Number( json[ 1 ] );
+        this._highestPrice = Number( json[ 2 ] );
+        this._lowestPrice = Number( json[ 3 ] );
+        this._closurePrice = Number( json[ 4 ] );
+        this._baseAssetVolume = Number( json[ 5 ] );
         this._closureTime = new Date( json[ 6 ] );
-        this._quoteAssetVolume = json[ 7 ];
-        this._tradesCount = json[ 8 ];
-        this._boughtBaseAssetVolume = json[ 9 ];
-        this._boughtQuoteAssetVolume = json[ 10 ];
+        this._quoteAssetVolume = Number( json[ 7 ] );
+        this._tradesCount = Number( json[ 8 ] );
+        this._boughtBaseAssetVolume = Number( json[ 9 ] );
+        this._boughtQuoteAssetVolume = Number( json[ 10 ] );
 
     }
 

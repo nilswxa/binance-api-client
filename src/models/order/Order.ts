@@ -28,15 +28,15 @@ export class Order {
         this._symbol = json.symbol;
         this._id = json.orderId;
         this._clientId = json.clientOrderId;
-        this._price = json.price;
-        this._originalQuantity = json.origQty;
-        this._executedQuantity = json.executedQty;
+        this._price = Number( json.price );
+        this._originalQuantity = Number( json.origQty );
+        this._executedQuantity = Number( json.executedQty );
         this._status = OrderStatus[ json.status as keyof typeof OrderStatus ];
         this._timeInForce = TimeInForce[ json.timeInForce as keyof typeof TimeInForce ];
         this._type = OrderType[ json.type as keyof typeof OrderType ];
         this._side = OrderSide[ json.side as keyof typeof OrderSide ];
-        this._stopPrice = json.stopPrice;
-        this._icebergQuantity = json.icebergQty;
+        this._stopPrice = Number( json.stopPrice );
+        this._icebergQuantity = Number( json.icebergQty );
         this._timestamp = new Date( json.time );
 
     }

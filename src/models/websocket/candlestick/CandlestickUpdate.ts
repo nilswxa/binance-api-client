@@ -29,21 +29,21 @@ export class CandlestickUpdate {
         this._timestamp = new Date( json.E );
         this._symbol = json.s;
         this._openingTime = new Date( json.k.t );
-        this._openingPrice = json.k.o;
-        this._highestPrice = json.k.h;
-        this._lowestPrice = json.k.l;
-        this._closurePrice = json.k.c;
-        this._baseAssetVolume = json.k.v;
+        this._openingPrice = Number( json.k.o );
+        this._highestPrice = Number( json.k.h );
+        this._lowestPrice =  Number( json.k.l );
+        this._closurePrice =  Number( json.k.c );
+        this._baseAssetVolume =  Number( json.k.v );
         this._closureTime = new Date( json.k.T );
-        this._quoteAssetVolume = json.k.q;
+        this._quoteAssetVolume =  Number( json.k.q );
         this._tradesCount = json.k.n;
-        this._boughtBaseAssetVolume = json.k.V;
-        this._boughtQuoteAssetVolume = json.k.Q;
+        this._boughtBaseAssetVolume =  Number( json.k.V );
+        this._boughtQuoteAssetVolume = Number(  json.k.Q );
         this._firstTradeId = json.k.f;
         this._lastTradeId = json.k.L;
         this._interval = json.k.i;
         this._final = json.k.x;
-        this._activeBuyVolume = json.k.V;
+        this._activeBuyVolume =  Number( json.k.V );
 
     }
 

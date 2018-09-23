@@ -11,9 +11,9 @@ export class LotSizeFilter implements SymbolFilter {
 
     constructor( json: any ) {
 
-        this._minimumQuantity = json.minQty;
-        this._maximumQuantity = json.maxQty;
-        this._stepSize = json.stepSize;
+        this._minimumQuantity = Number( json.minQty );
+        this._maximumQuantity = Number ( json.maxQty );
+        this._stepSize = Number ( json.stepSize );
 
     }
 

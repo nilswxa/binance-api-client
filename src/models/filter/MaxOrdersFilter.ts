@@ -9,7 +9,7 @@ export class MaxOrdersFilter implements SymbolFilter, ExchangeFilter {
     private _value: number;
 
     constructor( json: any ) {
-        this._value = json.limit;
+        this._value = Number ( json.limit );
     }
 
     get value(): number {

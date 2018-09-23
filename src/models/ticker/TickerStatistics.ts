@@ -24,17 +24,17 @@ export class TickerStatistics {
     constructor( json: any, symbol?: string ) {
 
         this.symbol = json.symbol || symbol;
-        this.priceChange = json.priceChange;
-        this.priceChangePercentage = json.priceChangePercent;
-        this.weightedAveragePrice = json.weightedAvgPrice;
-        this.previousClosurePrice = json.prevClosePrice;
-        this.lastPrice = json.lastPrice;
-        this.bidPrice = json.bidPrice;
-        this.askPrice = json.askPrice;
-        this.openingPrice = json.openPrice;
-        this.highestPrice = json.highPrice;
-        this.lowestPrice = json.lowPrice;
-        this.volume = json.volume;
+        this.priceChange = Number( json.priceChange );
+        this.priceChangePercentage = Number( json.priceChangePercent );
+        this.weightedAveragePrice = Number( json.weightedAvgPrice );
+        this.previousClosurePrice = Number( json.prevClosePrice );
+        this.lastPrice = Number ( json.lastPrice );
+        this.bidPrice = Number( json.bidPrice );
+        this.askPrice = Number( json.askPrice );
+        this.openingPrice = Number( json.openPrice );
+        this.highestPrice = Number( json.highPrice );
+        this.lowestPrice = Number( json.lowPrice );
+        this.volume = Number( json.volume );
         this.openingTime = new Date( json.openTime );
         this.closureTime = new Date( json.closeTime );
         this.firstTradeId = json.firstId;

@@ -32,15 +32,15 @@ export class OrderUpdate {
         this._side = OrderSide[ json.S as keyof typeof OrderSide ];
         this._type = OrderType[ json.o as keyof typeof OrderType ];
         this._timeInForce = TimeInForce[ json.f as keyof typeof TimeInForce ];
-        this._quantity = parseFloat( json.q );
-        this._price = parseFloat( json.p );
+        this._quantity = Number( json.q );
+        this._price = Number( json.p );
         this._executionStatus = OrderExecutionStatus[ json.x as keyof typeof OrderExecutionStatus ];
         this._status = OrderStatus[ json.X as keyof typeof OrderStatus ];
         this._rejectionMotive = OrderRejectionMotive[ json.r as keyof typeof OrderRejectionMotive ];
         this._id = json.i;
-        this._lastFilledTradePrice = parseFloat( json.L );
-        this._lastExecutedQuantity = parseFloat( json.l );
-        this._cumulativeFilledQuantity = parseFloat( json.z );
+        this._lastFilledTradePrice = Number( json.L );
+        this._lastExecutedQuantity = Number( json.l );
+        this._cumulativeFilledQuantity = Number( json.z );
         this._placedAt = new Date( json.T );
 
     }
