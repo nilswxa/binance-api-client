@@ -15,6 +15,7 @@ export class TickerStatistics {
     public highestPrice: number;
     public lowestPrice: number;
     public volume: number;
+    public quoteVolume: number;
     public openingTime: Date;
     public closureTime: Date;
     public firstTradeId: number;
@@ -35,6 +36,7 @@ export class TickerStatistics {
         this.highestPrice = Number( json.highPrice );
         this.lowestPrice = Number( json.lowPrice );
         this.volume = Number( json.volume );
+        this.quoteVolume = Number ( json.quoteVolume );
         this.openingTime = new Date( json.openTime );
         this.closureTime = new Date( json.closeTime );
         this.firstTradeId = json.firstId;
