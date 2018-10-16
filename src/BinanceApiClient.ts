@@ -33,6 +33,8 @@ import { OrderResult } from "./models/order/OrderResult";
 import { OrderFull } from "./models/order/OrderFull";
 import { HeartbeatHandler } from "websocket-heartbeats";
 
+import { Big } from 'big.js'
+
 /**
  * Represents a single Binance API client.
  */
@@ -281,14 +283,14 @@ export class BinanceApiClient {
                 "timeInForce",
                 type === OrderType.MARKET || type === OrderType.STOP_LOSS ? null : TimeInForce[ timeInForce ]
             ],
-            [ "quantity", quantity.toFixed(10) ],
+            [ "quantity", Big(quantity).toFixed() ],
             [
                 "price",
-                type === OrderType.MARKET || type === OrderType.STOP_LOSS ? null : price.toFixed(10)
+                type === OrderType.MARKET || type === OrderType.STOP_LOSS ? null : Big(price).toFixed()
             ],
             [ "newClientOrderId", clientOrderId ],
-            [ "stopPrice", stopPrice ? stopPrice.toFixed(10) : null ],
-            [ "icebergQty", icebergQuantity ? icebergQuantity.toFixed(10) : null ],
+            [ "stopPrice", stopPrice ? Big(stopPrice).toFixed() : null ],
+            [ "icebergQty", icebergQuantity ? Big(icebergQuantity).toFixed() : null ],
             [ "newOrderRespType", responseType ? ResponseType [ responseType ] : null ]
         );
 
@@ -346,11 +348,11 @@ export class BinanceApiClient {
             [ "side", OrderSide[ side ] ],
             [ "type", OrderType[ type ] ],
             [ "timeInForce", TimeInForce[ timeInForce ] ],
-            [ "quantity", quantity ],
-            [ "price", price ],
+            [ "quantity", quantity ? Big(quantity).toFixed() : null ],
+            [ "price", price ? Big(price).toFixed() : null ],
             [ "newClientOrderId", clientId ],
-            [ "stopPrice", stopPrice ],
-            [ "icebergQty", icebergQuantity ],
+            [ "stopPrice", stopPrice ? Big(stopPrice).toFixed() : null ],
+            [ "icebergQty", icebergQuantity ? Big(icebergQuantity).toFixed() : null ],
             [ "recvWindow", timeout ]
         );
 
