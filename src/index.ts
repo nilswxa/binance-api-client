@@ -39,6 +39,7 @@ export { AccountUpdate } from "./models/websocket/account/AccountUpdate";
 export { Balance } from "./models/account/Balance";
 export { Candlestick } from "./models/candlestick/Candlestick";
 export { CandlestickUpdate } from "./models/websocket/candlestick/CandlestickUpdate";
+export { TickerUpdate } from "./models/websocket/ticker/TickerUpdate";
 export { ExchangeInfo } from "./models/misc/ExchangeInfo";
 export { LatestPrice } from "./models/depth/LatestPrice";
 export { Symbol } from "./models/misc/Symbol";

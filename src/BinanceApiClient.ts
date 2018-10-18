@@ -24,6 +24,7 @@ import { Trade } from "./models/trade/Trade";
 import * as WebSocket from "ws";
 import { OrderBookUpdate } from "./models/websocket/depth/OrderBookUpdate";
 import { CandlestickUpdate } from "./models/websocket/candlestick/CandlestickUpdate";
+import { TickerUpdate } from "./models/websocket/ticker/TickerUpdate";
 import { TradeUpdate } from "./models/websocket/trade/TradeUpdate";
 import { AccountUpdate } from "./models/websocket/account/AccountUpdate";
 import { OrderUpdate } from "./models/websocket/order/OrderUpdate";
@@ -714,6 +715,43 @@ export class BinanceApiClient {
 
     /**
      * Initializes a web socket data stream that gives us information about
+     * trade updates. Stream keepalive is performed through
+     * [[keepAliveUserStream]] following the rules described
+     * [here](https://github.com/binance-exchange/binance-official-api-docs/blob/master/web-socket-streams.md)
+     *
+     * @param symbol            The symbol of which we want to get the trade updates.
+     * @param onUpdate          A function to be called when a new update is received.
+     * @param connectionTimeout Timeout based on which the web socket connection is
+     *                          considered to be broken based on a heartbeat monitor.
+     * @param onLostConnection  A callback to be invoked when the web socket connection
+     *                          is detected as broken.
+     */
+    public monitorAllTickers(
+        onUpdate: ( update: TickerUpdate[] ) => any,
+        connectionTimeout: number,
+        onLostConnection: () => any ): WebSocket {
+
+        let websocket: WebSocket = new WebSocket(
+            BinanceApiClient.WS_BASE_URL + "!ticker@arr",
+            { perMessageDeflate: false }
+        );
+
+        new HeartbeatHandler(
+            websocket,
+            connectionTimeout || BinanceApiClient.DEFAULT_WS_TIMEOUT,
+            onLostConnection
+        ).handle();
+
+        websocket.on( "message", ( data: any ) => {
+            const items = JSON.parse(data) as any[];
+            onUpdate( items.map( item => new TickerUpdate( item ) ));
+        } );
+
+        return websocket
+    }
+
+    /**
+     * Initializes a web socket data stream that gives us information about
      * the personal account updates. Stream keepalive is performed through
      * [[keepAliveUserStream]] following the rules described
      * [here](https://github.com/binance-exchange/binance-official-api-docs/blob/master/user-data-stream.md)
@@ -730,7 +768,7 @@ export class BinanceApiClient {
         listenKey: string,
         onUpdate: ( update: AccountUpdate | OrderUpdate ) => any,
         connectionTimeout: number,
-        onLostConnection: () => any ): void {
+        onLostConnection: () => any ): WebSocket {
 
         let websocket: WebSocket = new WebSocket(
             BinanceApiClient.WS_BASE_URL + listenKey,
@@ -761,6 +799,7 @@ export class BinanceApiClient {
 
         } );
 
+        return websocket;
     }
 
     /**
